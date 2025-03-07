@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -24,12 +23,7 @@ func GetConnRabbit() *Conn_Rabbit {
 	}
 
 	// Obtener las variables
-	rabbitUser := os.Getenv("R_USER")
-	rabbitPassword := os.Getenv("R_PASSWORD")
-	rabbitIP := os.Getenv("R_IP")
-	rabbitPort := os.Getenv("R_PORT")
-
-	rabbitUrl := fmt.Sprintf("amqp://%s:%s@%s:%s/", rabbitUser, rabbitPassword, rabbitIP, rabbitPort)
+	rabbitUrl := os.Getenv("RABBIT_URL")
 
     // Conexión a RabbitMQ
     conn, err := amqp.Dial(rabbitUrl)

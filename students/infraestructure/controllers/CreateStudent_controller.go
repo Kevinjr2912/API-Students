@@ -40,9 +40,6 @@ func (cs_c *CreateStudentController) Run(ctx *gin.Context) {
 		return
 	}
 
-	// Enviamos la información de dicho estudiante al broker
-	cs_c.event.Run(&student)
-
 	// Definimos los encabezados
 	ctx.Writer.Header().Set("Content-Type", "application/vnd.api+json")
 	
@@ -50,6 +47,9 @@ func (cs_c *CreateStudentController) Run(ctx *gin.Context) {
 
 	// Reasignamos el id del estudiante
 	student.Id = id
+
+	// Enviamos la información de dicho estudiante al broker
+	cs_c.event.Run(&student)
 
 	response := responses.NewResponseStudentCreated(&student)
 

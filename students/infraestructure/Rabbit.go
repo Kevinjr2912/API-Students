@@ -32,8 +32,8 @@ func (r *Rabbit) SendMessageToBroker(student *entities.Student) {
 	defer r.conn.Channel.Close()
 
 	err := r.conn.Channel.ExchangeDeclare(
-		"logs",   // name
-		"fanout", // type
+		"access",   // name
+		"direct", // type
 		true,     // durable
 		false,    // auto-deleted
 		false,    // internal
@@ -49,12 +49,12 @@ func (r *Rabbit) SendMessageToBroker(student *entities.Student) {
 	r.conn.FailOnError(err, "Failed to marshal JSON")
 
 	err = r.conn.Channel.PublishWithContext(ctx,
-		"logs", // exchange
+		"access", // exchange
 		"",     // routing key
 		false,  // mandatory
 		false,  // immediate
 		amqp.Publishing{
-			ContentType: "text/plain",
+			ContentType: "application/json",
 			Body:        []byte(body),
 		})
 	r.conn.FailOnError(err, "Failed to publish a message")
