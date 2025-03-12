@@ -2,6 +2,7 @@ package controllers
 
 import (
 	application "apihex01/students/application/useCases"
+	"apihex01/students/infraestructure"
 	"apihex01/students/infraestructure/responses"
 	"net/http"
 	"strconv"
@@ -13,8 +14,11 @@ type FindByIdController struct {
 	useCase *application.FindById
 }
 
-func NewFindByIdController(useCase *application.FindById) *FindByIdController {
-	return &FindByIdController{useCase: useCase}
+func NewFindByIdController() *FindByIdController {
+	mysql := infraestructure.GetMySQL()
+	app := application.NewFindById(mysql)
+
+	return &FindByIdController{useCase: app}
 }
 
 func (fbi_c *FindByIdController) Run(ctx *gin.Context) {

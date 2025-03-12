@@ -2,6 +2,7 @@ package controllers
 
 import (
 	application "apihex01/students/application/useCases"
+	"apihex01/students/infraestructure"
 	"net/http"
 	"strconv"
 
@@ -12,8 +13,11 @@ type DeleteStudentController struct {
 	useCase *application.DeleteStudent
 }
 
-func NewDeleteStudentController(usecase *application.DeleteStudent) *DeleteStudentController {
-	return &DeleteStudentController{useCase: usecase}
+func NewDeleteStudentController() *DeleteStudentController {
+	mysql := infraestructure.GetMySQL()
+	app := application.NewDeleteStudent(mysql)
+
+	return &DeleteStudentController{useCase: app}
 }
 
 func (ds_c *DeleteStudentController) Run(ctx *gin.Context) {

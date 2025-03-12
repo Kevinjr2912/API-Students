@@ -3,6 +3,7 @@ package controllers
 import (
 	application "apihex01/students/application/useCases"
 	"apihex01/students/domain/entities"
+	"apihex01/students/infraestructure"
 	"apihex01/students/infraestructure/responses"
 	"net/http"
 	"strconv"
@@ -14,8 +15,11 @@ type UpdateStudentController struct {
 	useCase *application.UpdateStudent
 }
 
-func NewUpdateStudentController(useCase *application.UpdateStudent) *UpdateStudentController {
-	return &UpdateStudentController{useCase: useCase}
+func NewUpdateStudentController() *UpdateStudentController {
+	mysql := infraestructure.GetMySQL()
+	app := application.NewUpdateStudent(mysql)
+
+	return &UpdateStudentController{useCase: app}
 }
 
 func (us_c *UpdateStudentController) Run(ctx *gin.Context) {

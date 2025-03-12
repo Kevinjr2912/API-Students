@@ -4,6 +4,7 @@ import (
 	"apihex01/students/application/services"
 	application "apihex01/students/application/useCases"
 	"apihex01/students/domain/entities"
+	"apihex01/students/infraestructure"
 	"apihex01/students/infraestructure/responses"
 	"fmt"
 	"net/http"
@@ -16,8 +17,16 @@ type CreateStudentController struct {
 	event *services.Event
 }
 
-func NewCreateStudentController(useCase *application.CreateStudent, event *services.Event) *CreateStudentController {
-	return &CreateStudentController{useCase: useCase, event: event}
+func NewCreateStudentController() *CreateStudentController {
+	// MySQL
+	mysql := infraestructure.GetMySQL()
+	app := application.NewCreateStudent(mysql)
+
+	// Rabbit
+	rabbit := infraestructure.GetRabbit()
+	event := services.NewEvent(rabbit)
+
+	return &CreateStudentController{useCase: app, event: event}
 }
 
 func (cs_c *CreateStudentController) Run(ctx *gin.Context) {

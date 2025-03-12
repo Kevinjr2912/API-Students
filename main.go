@@ -9,9 +9,9 @@ import (
 )
 
 func main() {
-	studentInfra.Init()
+	studentInfra.InitDepedencies()
 
-	// Creamos el router
+	// // Creamos el router
 	r := gin.Default()
 
 	// CORS
@@ -19,6 +19,6 @@ func main() {
 
 	studentRoutes.StudentRouter(r)
 
-	// Levantamos el servidor
+	// // Levantamos el servidor
 	r.Run()
 }

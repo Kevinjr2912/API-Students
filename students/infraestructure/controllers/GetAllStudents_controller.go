@@ -2,6 +2,7 @@ package controllers
 
 import (
 	application "apihex01/students/application/useCases"
+	"apihex01/students/infraestructure"
 	"apihex01/students/infraestructure/responses"
 	"net/http"
 
@@ -12,8 +13,11 @@ type GetAllStudentsController struct {
 	useCase *application.GetAllStudents
 }
 
-func NewGetAllStudentsController(useCase *application.GetAllStudents) *GetAllStudentsController {
-	return &GetAllStudentsController{useCase: useCase}
+func NewGetAllStudentsController() *GetAllStudentsController {
+	mysql := infraestructure.GetMySQL()
+	app := application.NewGetAllStudents(mysql)
+
+	return &GetAllStudentsController{useCase: app}
 }
 
 func (gas_c *GetAllStudentsController) Run(ctx *gin.Context) {
@@ -24,7 +28,7 @@ func (gas_c *GetAllStudentsController) Run(ctx *gin.Context) {
 		return
 	}
 
-	 response := responses.NewResponseGetAllStudents(students)
+	response := responses.NewResponseGetAllStudents(students)
 
-	 ctx.JSON(http.StatusOK, response)
+	ctx.JSON(http.StatusOK, response)
 }

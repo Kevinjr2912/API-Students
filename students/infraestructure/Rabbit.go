@@ -50,9 +50,9 @@ func (r *Rabbit) SendMessageToBroker(student *entities.Student) {
 
 	err = r.conn.Channel.PublishWithContext(ctx,
 		"access", // exchange
-		"",     // routing key
-		false,  // mandatory
-		false,  // immediate
+		"",       // routing key
+		false,    // mandatory
+		false,    // immediate
 		amqp.Publishing{
 			ContentType: "application/json",
 			Body:        []byte(body),
