@@ -1,9 +1,9 @@
 package main
 
 import (
-	"apihex01/core"
-	studentInfra "apihex01/students/infraestructure"
-	studentRoutes "apihex01/students/infraestructure/routes"
+	"apihex01/src/core"
+	studentInfra "apihex01/src/students/infraestructure"
+	studentRoutes "apihex01/src/students/infraestructure/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,10 +15,10 @@ func main() {
 	r := gin.Default()
 
 	// CORS
-	core.Init(r)
-
+	core.ConfigCORS(r)
+		
 	studentRoutes.StudentRouter(r)
 
-	// // Levantamos el servidor
+	// Levantamos el servidor
 	r.Run()
 }
