@@ -28,9 +28,6 @@ func NewRabbitMq() *Rabbit {
 
 func (r *Rabbit) SendMessageToBroker(student *entities.StudentCredentials) {
 
-	defer r.conn.Broker.Close()
-	defer r.conn.Channel.Close()
-
 	err := r.conn.Channel.ExchangeDeclare(
 		"access",   // name
 		"direct", // type

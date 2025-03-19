@@ -43,7 +43,7 @@ func (mysql *MySQL) GetAllStudents() (studentsArray *[]entities.Student, err err
 	var students []entities.Student
 	var student entities.Student
 
-	query := "SELECT id_student,name,age,phone_number FROM students"
+	query := "SELECT id_student, name, age, phone_number FROM students"
 
 	rows := mysql.conn.FetchRows(query)
 

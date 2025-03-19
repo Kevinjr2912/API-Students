@@ -1,10 +1,10 @@
 package main
 
 import (
-	"apihex01/src/core"
 	studentInfra "apihex01/src/students/infraestructure"
 	studentRoutes "apihex01/src/students/infraestructure/routes"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,7 +15,7 @@ func main() {
 	r := gin.Default()
 
 	// CORS
-	core.ConfigCORS(r)
+	r.Use(cors.Default())
 		
 	studentRoutes.StudentRouter(r)
 
